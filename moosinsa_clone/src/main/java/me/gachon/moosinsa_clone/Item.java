@@ -15,4 +15,5 @@ public class Item {
 
     public String itemName;
     public Integer itemPrice;
+    public String itemDescription;
 }
