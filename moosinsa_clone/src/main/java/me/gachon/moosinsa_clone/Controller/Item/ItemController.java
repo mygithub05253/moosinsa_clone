@@ -1,14 +1,10 @@
 package me.gachon.moosinsa_clone.Controller.Item;
 
 import lombok.RequiredArgsConstructor;
-import me.gachon.moosinsa_clone.Dto.ItemListResponse;
-import me.gachon.moosinsa_clone.Entity.Item;
 import me.gachon.moosinsa_clone.Service.ItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor

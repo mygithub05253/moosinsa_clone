@@ -1,4 +1,4 @@
-package me.gachon.moosinsa_clone.Dto;
+package me.gachon.moosinsa_clone.Dto.Item;
 
 import lombok.Getter;
 import me.gachon.moosinsa_clone.Entity.Category;
