@@ -15,11 +15,11 @@ import java.util.List;
 @RequestMapping("/items")
 public class ItemController {
 
-    private final ItemService itemService;
+    private final ItemService itemService; // Item과 관련된 DB 메서드를 저장해둔 서비스 객체 주입
     // 메인 화면 상품 조회
     @GetMapping("/")
     public String getItems(Model model) {
-        model.addAttribute("items", itemService.findAll());
+        model.addAttribute("items", itemService.findAll()); // 모든 item을 담은 객체를 model에 담아 프론트로 전송
         return "items/list";
     }
 
