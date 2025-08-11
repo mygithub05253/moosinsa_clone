@@ -1,6 +1,7 @@
 package me.gachon.moosinsa_clone.Controller.Item;
 
 import lombok.RequiredArgsConstructor;
+import me.gachon.moosinsa_clone.Dto.ItemListResponse;
 import me.gachon.moosinsa_clone.Entity.Item;
 import me.gachon.moosinsa_clone.Service.ItemService;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,9 @@ public class ItemController {
     private final ItemService itemService;
     // 메인 화면 상품 조회
     @GetMapping("/")
-    @ResponseBody
-    public List<Item> getItems() {
-        return itemService.findAll();
+    public String getItems(Model model) {
+        model.addAttribute("items", itemService.findAll());
+        return "items/list";
     }
 
     // 상품 상세 조회
