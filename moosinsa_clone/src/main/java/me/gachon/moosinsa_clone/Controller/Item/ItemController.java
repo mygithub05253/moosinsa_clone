@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class ItemController {
 
     // 메인 화면 상품 조회
-    @GetMapping
+    @GetMapping("/")
     public String getItems(Model model) {
         return "items/list"; // items/list.html
     }
