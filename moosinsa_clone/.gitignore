@@ -18,7 +18,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### 빌드 산출물 ###
+/target/
+/build/
+
+### OS 잡파일 ###
+.DS_Store
