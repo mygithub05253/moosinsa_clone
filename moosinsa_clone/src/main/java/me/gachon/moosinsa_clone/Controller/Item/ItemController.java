@@ -22,6 +22,7 @@ public class ItemController {
     // 상품 상세 조회
     @GetMapping("/{itemId}")
     public String getItemDetail(@PathVariable Long itemId, Model model) {
+        model.addAttribute("item", itemService.findById(itemId));
         return "items/detail";
     }
 
@@ -32,7 +33,7 @@ public class ItemController {
     }
 
     // 상품 카테고리 검색
-    @GetMapping("/{categoryId}")
+    @GetMapping("/search/{categoryId}")
     public String getItemsByCategory(@PathVariable Long categoryId, Model model) {
         return "items/category";
     }

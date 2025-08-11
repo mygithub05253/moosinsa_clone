@@ -22,4 +22,9 @@ public class ItemService {
 
         return ItemListResponses;
     }
+
+    public Item findById(Long id) {
+        Item item = itemRepository.findById(id).orElse(null);
+        return item;
+    }
 }
