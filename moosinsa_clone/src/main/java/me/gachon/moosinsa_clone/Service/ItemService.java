@@ -25,7 +25,7 @@ public class ItemService {
     }
 
     public Item findById(Long id) {
-        Item item = itemRepository.findById(id).orElse(null);
+        Item item = itemRepository.findById(id).orElse(null); // 상품 id로 상세 검색
         return item;
     }
 }
