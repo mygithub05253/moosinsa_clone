@@ -85,7 +85,7 @@ public class UserController {
     @GetMapping
     public String listUsers(Model model) {
         model.addAttribute("users", userService.getUsers());
-        return "user_list"; // templates/user_list.html
+        return "users/user_list"; // templates/user_list.html
     }
 
     // [API] 회원 단건 조회 (JSON)
