@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/moosinsa_clone.main.iml" filepath="$PROJECT_DIR$/.idea/modules/moosinsa_clone.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/shoppingmall_project.iml" filepath="$PROJECT_DIR$/.idea/shoppingmall_project.iml" />
-    </modules>
-  </component>
-</project>
