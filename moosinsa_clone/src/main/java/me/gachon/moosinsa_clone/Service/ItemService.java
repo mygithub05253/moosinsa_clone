@@ -2,6 +2,7 @@ package me.gachon.moosinsa_clone.Service;
 
 import lombok.RequiredArgsConstructor;
 import me.gachon.moosinsa_clone.Dto.Item.ItemListResponse;
+import me.gachon.moosinsa_clone.Entity.Item;
 import me.gachon.moosinsa_clone.Repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,10 @@ public class ItemService {
                 .toList(); // 생성된 응답객체를 리스트 형태로 묶음
 
         return ItemListResponses;
+    }
+
+    public Item findById(Long id) {
+        Item item = itemRepository.findById(id).orElse(null);
+        return item;
     }
 }

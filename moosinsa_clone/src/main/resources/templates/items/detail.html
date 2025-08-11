@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>상품상세 페이지</title>
+</head>
+<body>
+    <h4 th:text="${item.itemName}"></h4>
+    <img src="https://placehold.co/300">
+    <p th:text="${item.category.name}"></p>
+    <p th:text="${item.itemDescription}"></p>
+    <p th:text="${item.itemBrand}"></p>
+    <p th:text="${item.itemPrice}"></p>
+    <p th:text="${item.itemStock}"></p>
+    <p th:text="${item.itemLike}"></p>
+    <p th:text="${item.itemRating}"></p>
+    <p th:text="${item.itemStatus}"></p>
+    <p th:text="${item.itemSize.itemSizeName}"></p>
+    <p th:text="${item.itemColor.itemColorName}"></p>
+</body>
+</html>
