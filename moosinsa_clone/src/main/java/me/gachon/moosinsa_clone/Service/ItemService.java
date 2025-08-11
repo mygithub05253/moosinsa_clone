@@ -1,8 +1,7 @@
 package me.gachon.moosinsa_clone.Service;
 
 import lombok.RequiredArgsConstructor;
-import me.gachon.moosinsa_clone.Dto.ItemListResponse;
-import me.gachon.moosinsa_clone.Entity.Item;
+import me.gachon.moosinsa_clone.Dto.Item.ItemListResponse;
 import me.gachon.moosinsa_clone.Repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
