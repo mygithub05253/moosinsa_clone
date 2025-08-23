@@ -1,12 +1,18 @@
 package me.gachon.moosinsa_clone.Controller.Item;
 
 import lombok.RequiredArgsConstructor;
+import me.gachon.moosinsa_clone.Dto.Item.CreateItemRequest;
+import me.gachon.moosinsa_clone.Dto.Item.ItemListResponse;
+import me.gachon.moosinsa_clone.Entity.Item;
 import me.gachon.moosinsa_clone.Service.ItemService;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/items")
 public class ItemController {
@@ -14,16 +20,25 @@ public class ItemController {
     private final ItemService itemService; // Item과 관련된 DB 메서드를 저장해둔 서비스 객체 주입
     // 메인 화면 상품 조회
     @GetMapping("/")
-    public String getItems(Model model) {
-        model.addAttribute("items", itemService.findAll()); // 모든 item을 담은 객체를 model에 담아 프론트로 전송
-        return "items/list";
+    public ResponseEntity<List<ItemListResponse>> getItems(Model model) {
+        return ResponseEntity.ok()
+                .body(itemService.findAll());
     }
 
     // 상품 상세 조회
     @GetMapping("/{itemId}")
-    public String getItemDetail(@PathVariable Long itemId, Model model) {
-        model.addAttribute("item", itemService.findById(itemId));
-        return "items/detail";
+    public ResponseEntity<Item> getItemDetail(@PathVariable Long itemId, Model model) {
+        return ResponseEntity.ok()
+                .body(itemService.findById(itemId));
+    }
+
+    // 상품 추가 (관리자)
+    @PostMapping ("/create")
+    public ResponseEntity<Item> createItem(@RequestBody CreateItemRequest request) {
+        Item savedItem = itemService.save(request);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(savedItem);
     }
 
     // 상품 검색
@@ -36,18 +51,6 @@ public class ItemController {
     @GetMapping("/search/{categoryId}")
     public String getItemsByCategory(@PathVariable Long categoryId, Model model) {
         return "items/category";
-    }
-
-    // 상품 추가 화면 (관리자)
-    @GetMapping("/create")
-    public String createItemForm() {
-        return "items/createForm";
-    }
-
-    // 상품 추가 프로세스 (관리자)
-    @PostMapping("/create_process")
-    public String createItemProcess() {
-        return "redirect:/items";
     }
 
     // 상품 삭제 (관리자)
