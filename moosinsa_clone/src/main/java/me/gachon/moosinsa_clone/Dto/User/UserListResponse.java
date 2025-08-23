@@ -15,7 +15,7 @@ public class UserListResponse {
         return UserListResponse.builder()
                 .userId(user.getUserId())
                 .userName(user.getUserName())
-                .userGrade(String.valueOf(user.getUserGrade()))
+                .userGrade(user.getUserGrade())
                 .build();
     }
 }
