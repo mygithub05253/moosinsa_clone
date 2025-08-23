@@ -9,11 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class homeController {
 
-    @GetMapping("/")
-    public String home() {
-        return "redirect:/items/";
-    }
-
     @GetMapping("/api/hello")
     public String test() {
         return "Hello, world!";
