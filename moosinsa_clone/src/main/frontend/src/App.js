@@ -1,21 +1,32 @@
-// src/main/frontend/src/App.js
-
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// './global/style' 파일에서 GlobalStyle을 named export 방식으로 내보냈으므로,
+// import 할 때 중괄호 {}를 사용하여 정확하게 'GlobalStyle'이라는 이름으로 가져옵니다.
+import { GlobalStyle } from "./global/GlobalStyles";
+import Layout from './pages/Layout/Layout';
+import MainPage from './pages/Main/MainPage';
+import SignupPage from './pages/Main/SignupPage';
+import UserListPage from './pages/Main/UserListPage';
+import LoginPage from './pages/Main/LoginPage';
 function App() {
-  const [hello, setHello] = useState('')
-
-  useEffect(() => {
-    axios.get('/api/hello')
-        .then(response => setHello(response.data))
-        .catch(error => console.log(error))
-  }, []);
-
   return (
-      <div>
-        백엔드에서 가져온 데이터입니다 : {hello}
-      </div>
+    <BrowserRouter>
+      {/* GlobalStyle 컴포넌트를 여기에 두면 애플리케이션 전체에 전역 스타일이 적용됩니다. */}
+      <GlobalStyle />
+      <Routes>
+        {/* Layout 컴포넌트는 Header와 Footer를 포함하며, 그 안의 내용만 페이지에 따라 변경됩니다. */}
+        <Route element={<Layout />}>
+          {/* '/' 경로로 접속하면 MainPage 컴포넌트를 보여줍니다. */}
+          <Route path="/" element={<MainPage />} />
+          {/* '/signup' 경로로 접속하면 SignupPage 컴포넌트를 보여줍니다. */}
+          <Route path="/signup" element={<SignupPage />} />
+          {/* '/users' 경로로 접속하면 UserListPage 컴포넌트를 보여줍니다. */}
+          <Route path="/users" element={<UserListPage />} />
+          {/* '/login' 경로에 LoginPage 컴포넌트를 연결하는 Route를 추가합니다. */}
+          <Route path="/login" element={<LoginPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

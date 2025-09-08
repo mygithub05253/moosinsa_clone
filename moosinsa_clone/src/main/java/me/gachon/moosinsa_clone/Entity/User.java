@@ -22,18 +22,20 @@ public class User {
     @Column(name = "user_name", nullable = false, length = 50)
     private String userName;
 
+    // [추가] 닉네임 필드 추가 (nullable = false로 하여 필수 항목으로 지정)
+    @Column(name = "nickname", nullable = false, length = 50)
+    private String nickname;
+
     @Column(name = "phone_number", length = 30)
     private String phoneNumber;
 
     @Column(name = "address", length = 255)
     private String address;
 
-    // 문자열 PK를 가진 Grade와 FK로 연결
     @ManyToOne
     @JoinColumn(name = "user_grade")
     private Grade userGrade;
 
-    // Grade 이름 반환용 getter
     public String getUserGrade() {
         return userGrade != null ? userGrade.getGradeName() : null;
     }
