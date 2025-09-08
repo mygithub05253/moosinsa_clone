@@ -15,8 +15,8 @@ public class ItemColor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer itemColorId;
 
-    @ManyToOne
-    @JoinColumn(name = "itemId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "itemId", nullable = false)
     private Item item;
 
     private String itemColorName;

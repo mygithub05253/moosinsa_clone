@@ -2,10 +2,15 @@ package me.gachon.moosinsa_clone.Service;
 
 import lombok.RequiredArgsConstructor;
 import me.gachon.moosinsa_clone.Dto.Item.CreateItemRequest;
+import me.gachon.moosinsa_clone.Dto.Item.CreateItemResponse;
+import me.gachon.moosinsa_clone.Dto.Item.ItemDetailResponse;
 import me.gachon.moosinsa_clone.Dto.Item.ItemListResponse;
 import me.gachon.moosinsa_clone.Entity.*;
 import me.gachon.moosinsa_clone.Repository.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -29,16 +34,18 @@ public class ItemService {
         return ItemListResponses;
     }
 
-    public Item findById(Long id) {
-        Item item = itemRepository.findById(id).orElse(null); // 상품 id로 상세 검색
-        return item;
+    @Transactional(readOnly = true)
+    public ItemDetailResponse findById(Long itemId) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not found: " + itemId));
+        return new ItemDetailResponse(item);
     }
 
-    public Item save(CreateItemRequest request) {
+
+    public CreateItemResponse save(CreateItemRequest request) {
         Category category = null;
         ItemImage itemImage = null;
-        ItemSize itemSize = null;
-        ItemColor itemColor = null;
+
 
         if (request.getCategoryId() != null) {
             category = categoryRepository.findById(request.getCategoryId())
@@ -46,19 +53,17 @@ public class ItemService {
         }
 
         Item item = Item.builder()
-                .itemId(request.getItemId())
                 .category(category)
                 .itemName(request.getItemName())
                 .itemBrand(request.getItemBrand())
                 .itemImage(itemImage)
                 .itemPrice(request.getItemPrice())
                 .itemStock(request.getItemStock())
-                .itemSize(itemSize)
-                .itemColor(itemColor)
                 .itemDescription(request.getItemDescription())
                 .itemStatus(request.getItemStatus())
                 .build();
 
-        return itemRepository.save(item);
+        itemRepository.save(item);
+        return new CreateItemResponse(item.getItemId());
     }
 }
