@@ -19,8 +19,6 @@ public class CreateItemRequest {
     private Integer itemImageId;
     private Integer itemPrice;
     private Integer itemStock;
-    private Integer itemSizeId;
-    private Integer itemColorId;
     private String itemDescription;
     private String itemStatus;
 }

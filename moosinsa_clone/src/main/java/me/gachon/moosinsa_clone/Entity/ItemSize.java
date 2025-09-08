@@ -15,8 +15,9 @@ public class ItemSize {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer itemSizeId;
 
-    @ManyToOne
-    @JoinColumn(name = "itemId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "itemId", nullable = false)
+    // @JsonBackReference // (DTO 안 쓰면)
     private Item item;
 
     private String itemSizeName;

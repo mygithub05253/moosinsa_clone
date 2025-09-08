@@ -1,7 +1,10 @@
 package me.gachon.moosinsa_clone.Controller.Item;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import me.gachon.moosinsa_clone.Dto.Item.CreateItemRequest;
+import me.gachon.moosinsa_clone.Dto.Item.CreateItemResponse;
+import me.gachon.moosinsa_clone.Dto.Item.ItemDetailResponse;
 import me.gachon.moosinsa_clone.Dto.Item.ItemListResponse;
 import me.gachon.moosinsa_clone.Entity.Item;
 import me.gachon.moosinsa_clone.Service.ItemService;
@@ -9,36 +12,41 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/items")
+@RequestMapping("/api/items")
 public class ItemController {
 
     private final ItemService itemService; // Item과 관련된 DB 메서드를 저장해둔 서비스 객체 주입
     // 메인 화면 상품 조회
     @GetMapping("/")
-    public ResponseEntity<List<ItemListResponse>> getItems(Model model) {
+    public ResponseEntity<List<ItemListResponse>> getItems() {
         return ResponseEntity.ok()
                 .body(itemService.findAll());
     }
 
     // 상품 상세 조회
     @GetMapping("/{itemId}")
-    public ResponseEntity<Item> getItemDetail(@PathVariable Long itemId, Model model) {
-        return ResponseEntity.ok()
-                .body(itemService.findById(itemId));
+    public ResponseEntity<ItemDetailResponse> getItemDetail(@PathVariable Long itemId) {
+        return ResponseEntity.ok(itemService.findById(itemId));
     }
 
     // 상품 추가 (관리자)
     @PostMapping ("/create")
-    public ResponseEntity<Item> createItem(@RequestBody CreateItemRequest request) {
-        Item savedItem = itemService.save(request);
+    public ResponseEntity<CreateItemResponse> createItem(@Valid @RequestBody CreateItemRequest request, UriComponentsBuilder uriBuilder) {
+        CreateItemResponse savedItem = itemService.save(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(savedItem);
+        URI location = uriBuilder
+                .path("/api/items/{itemId}")
+                .buildAndExpand(savedItem.getItemId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(savedItem);
     }
 
     // 상품 검색

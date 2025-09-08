@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -46,13 +49,26 @@ public class Item {
     @Column(nullable = false)
     private Integer itemReviewAmount = 0;
 
-    @ManyToOne
-    @JoinColumn(name = "itemSizeId")
-    private ItemSize itemSize;
+    @OneToMany(mappedBy = "item", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @Builder.Default
+    private List<ItemSize> sizes = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "itemColorId")
-    private ItemColor itemColor;
+    @OneToMany(mappedBy = "item", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @Builder.Default
+    private List<ItemColor> colors = new ArrayList<>();
+
+    // 편의 메서드
+    public void addSize(ItemSize s) { sizes.add(s); s.setItem(this); }
+    public void clearSizes() {
+        for (ItemSize s : sizes) s.setItem(null);
+        sizes.clear();
+    }
+    public void addColor(ItemColor c) { colors.add(c); c.setItem(this); }
+    public void clearColors() {
+        for (ItemColor c : colors) c.setItem(null);
+        colors.clear();
+    }
+
 
     @Column(columnDefinition = "TEXT")
     private String itemDescription;
