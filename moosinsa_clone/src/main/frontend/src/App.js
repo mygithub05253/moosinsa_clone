@@ -33,7 +33,7 @@ function App() {
           {/* 상세 */}
           <Route path="/items/:itemId" element={<ItemDetail />} />
           {/* 루트로 오면 /items로 */}
-          <Route path="/" element={<Navigate to="/items" replace />} />
+          {/* <Route path="/" element={<Navigate to="/items" replace />} /> */}
           <Route path="/items/create" element={<ItemCreate />} />
           <Route path="/items/create-sizes/:itemId" element={<ItemSizeCreate />} />
         </Route>
